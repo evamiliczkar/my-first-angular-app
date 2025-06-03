@@ -1,5 +1,6 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { User } from './user.model'; // Assuming you have a User model defined in user.model.ts
+import { User } from './user.model';
+import { CardComponent } from "../shared/card/card.component"; // Assuming you have a User model defined in user.model.ts
 // type User = {
 //   id: string;
 //   name: string;
@@ -7,7 +8,7 @@ import { User } from './user.model'; // Assuming you have a User model defined i
 
 @Component({
   selector: 'app-user',
-  imports: [],
+  imports: [CardComponent],
   templateUrl: './user.component.html',
   styleUrl: './user.component.css'
 })
@@ -31,7 +32,6 @@ export class UserComponent {
   }
 
   emitUserSelection() {
-    console.log('User emitted:', this.user.id);
     this.select.emit(this.user.id)
   }
 }

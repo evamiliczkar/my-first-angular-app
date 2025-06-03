@@ -1,27 +1,43 @@
 import { Component, Input } from '@angular/core';
 import { TaskComponent } from "./task/task.component";
-import { DUMMY_TASKS } from './dummy-tasks';
+
+import { NewTaskComponent } from "./new-task/new-task.component";
+import { TasksService } from './tasks.service';
+
 
 @Component({
   selector: 'app-tasks',
-  imports: [TaskComponent],
+  imports: [TaskComponent, NewTaskComponent],
   templateUrl: './tasks.component.html',
   styleUrl: './tasks.component.css'
 })
+
+
 export class TasksComponent {
-  @Input({ required: true}) name!: string;
-  @Input({ required: true}) userId!:string;
-  tasks = DUMMY_TASKS;
+  @Input({ required: true }) name!: string;
+  @Input({ required: true }) userId!: string;
+  showNewTaskDialog = false;
 
-get selectedUserTasks(){
-console.log('Selected user ID:', this.userId);
-  return this.tasks.filter(task => task.userId === this.userId);
 
-}
+  constructor(private tasksService: TasksService) {
+    console.log('TasksComponent initialized for user:', this.tasksService);
 
-removeTask(taskId:string) {
-  console.log('Removing task with ID:', taskId);
-  this.tasks = this.tasks.filter(task => task.id !== taskId);
-  console.log('Updated tasks:', this.tasks);
-}
+  }
+
+  onCloseAddTask() {
+    this.showNewTaskDialog = !this.showNewTaskDialog;
+  }
+
+  get selectedUserTasks() {
+    console.log('Fetching tasks for user:', this.userId);
+
+    return this.tasksService.getUserTasks(this.userId);
+
+  }
+
+  removeTask(taskId: string) {
+    this.tasksService.removeTask(taskId);
+  }
+
+
 }

@@ -18,8 +18,9 @@ export class AppComponent {
   selectedUserId?: string;
 
   onSelectUser(id:string){
-    console.log('Selected user ID:', id);
     this.selectedUserId = id;
+    console.log('Selected User ID:', this.selectedUserId);
+    
     // Here you can handle the selected user ID, e.g., navigate to a user detail page
     
   }

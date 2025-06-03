@@ -1,31 +1,37 @@
+@if (showNewTaskDialog) {
+  <app-new-task (close)="onCloseAddTask()" [userId] = "userId" />
+}
+
+
 <section id="tasks">
 	<header>
 		<h2>{{ name }}'s Tasks</h2>
 		<menu>
-			<button>Add Task</button>
+			<button (click) = "onCloseAddTask()">Add Task</button>
 		</menu>
 	</header>
 
-	<ul [hidden]="!selectedUserTasks">
+	<ul >
         <!-- @if (selectedUserTasks && selectedUserTasks.length > 0) -->
 		 <!-- { -->
-		@for (task of selectedUserTasks; track task.id)
+		 @for (task of selectedUserTasks; track task.id) 
 		{
 		<li>
             <!-- @if (task){ -->
                 <app-task 
 				[task]="task" 
-				(emitTaskId) = "removeTask($event)"
+				
 				 />
-
             <!-- } -->
 		</li>
 		}
     <!-- } -->
         <!-- @else { -->
-        <li [hidden]="selectedUserTasks">
+        <!-- <li [hidden]="listOfSelectedUserTasks">
             <p>No tasks found for {{ name }}.</p>
-        </li>
+        </li> -->
         <!-- } -->
 	</ul>
+
+	<!-- <app-new-task (emitNewTask)="addNewTaskToList($event)" (emitCancelTask)="toggleShowNewTaskDialg()"   [hidden]="!showNewTaskDialog" /> -->
 </section>
