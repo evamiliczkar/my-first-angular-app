@@ -1,1 +1,31 @@
-<p>{{ name }}</p>
+<section id="tasks">
+	<header>
+		<h2>{{ name }}'s Tasks</h2>
+		<menu>
+			<button>Add Task</button>
+		</menu>
+	</header>
+
+	<ul [hidden]="!selectedUserTasks">
+        <!-- @if (selectedUserTasks && selectedUserTasks.length > 0) -->
+		 <!-- { -->
+		@for (task of selectedUserTasks; track task.id)
+		{
+		<li>
+            <!-- @if (task){ -->
+                <app-task 
+				[task]="task" 
+				(emitTaskId) = "removeTask($event)"
+				 />
+
+            <!-- } -->
+		</li>
+		}
+    <!-- } -->
+        <!-- @else { -->
+        <li [hidden]="selectedUserTasks">
+            <p>No tasks found for {{ name }}.</p>
+        </li>
+        <!-- } -->
+	</ul>
+</section>
